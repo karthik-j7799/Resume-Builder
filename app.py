@@ -1,14 +1,12 @@
 from flask import Flask, request, render_template, send_file
+import subprocess
 import os
-import requests
 
 app = Flask(__name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'resume_template')
 OUTPUT_DIR = os.path.join(BASE_DIR, 'outputs')
-
-os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 @app.route('/')
 def index():
@@ -24,19 +22,22 @@ def generate():
 
     tex = fill_template(tex, data)
 
-    response = requests.post(
-        'https://latexonline.cc/compile',
-        files={'file': ('resume.tex', tex.encode('utf-8'), 'application/x-tex')}
+    tex_output = os.path.join(OUTPUT_DIR, 'resume.tex')
+    with open(tex_output, 'w') as f:
+        f.write(tex)
+
+    result = subprocess.run(
+        ['pdflatex', '-interaction=nonstopmode', 'resume.tex'],
+        cwd=OUTPUT_DIR,
+        capture_output=True,
+        text=True
     )
 
-    if response.status_code != 200 or 'application/pdf' not in response.headers.get('Content-Type', ''):
-        return {'error': 'PDF generation failed', 'details': response.text}, 500
-
     pdf_path = os.path.join(OUTPUT_DIR, 'resume.pdf')
-    with open(pdf_path, 'wb') as f:
-        f.write(response.content)
+    if not os.path.exists(pdf_path):
+        return {'error': 'PDF generation failed', 'details': result.stdout}, 500
 
-    return send_file(pdf_path, as_attachment=True, download_name='resume.pdf', mimetype='application/pdf')
+    return send_file(pdf_path, as_attachment=True, download_name='resume.pdf')
 
 
 def fill_template(tex, data):
@@ -87,5 +88,6 @@ def fill_template(tex, data):
 
 
 if __name__ == '__main__':
+    import os
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
