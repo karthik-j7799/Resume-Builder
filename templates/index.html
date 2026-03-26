@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Resume Builder</h1>
+        <p class="subtitle">Fill in your details and download your professional resume</p>
+
+        <form id="resumeForm">
+
+            <!-- Personal Info -->
+            <div class="section">
+                <h2>Personal Information</h2>
+                <div class="grid-2">
+                    <input type="text" id="full_name" placeholder="Full Name" required>
+                    <input type="text" id="phone" placeholder="Phone Number" required>
+                    <input type="email" id="email" placeholder="Email Address" required>
+                    <input type="text" id="linkedin" placeholder="linkedin.com/in/yourname" required>
+                    <input type="text" id="github" placeholder="github.com/yourname" required>
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="section">
+                <h2>Education</h2>
+                <div id="educationList">
+                    <div class="entry" id="edu_0">
+                        <div class="grid-2">
+                            <input type="text" placeholder="Institution Name" class="edu_institution">
+                            <input type="text" placeholder="Location (e.g. Kollam, Kerala)" class="edu_location">
+                            <input type="text" placeholder="Degree" class="edu_degree">
+                            <input type="text" placeholder="Start Date (e.g. Aug. 2021)" class="edu_start">
+                            <input type="text" placeholder="End Date (e.g. Sept 2023)" class="edu_end">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="add-btn" onclick="addEducation()">+ Add Education</button>
+            </div>
+
+            <!-- Experience -->
+            <div class="section">
+                <h2>Work Experience</h2>
+                <div id="experienceList">
+                    <div class="entry" id="exp_0">
+                        <div class="grid-2">
+                            <input type="text" placeholder="Job Title" class="exp_title">
+                            <input type="text" placeholder="Company Name" class="exp_company">
+                            <input type="text" placeholder="Location" class="exp_location">
+                            <input type="text" placeholder="Start Date (e.g. June 2024)" class="exp_start">
+                            <input type="text" placeholder="End Date (e.g. Present)" class="exp_end">
+                        </div>
+                        <textarea placeholder="Bullet points (one per line)" class="exp_bullets" rows="4"></textarea>
+                    </div>
+                </div>
+                <button type="button" class="add-btn" onclick="addExperience()">+ Add Experience</button>
+            </div>
+
+            <!-- Projects -->
+            <div class="section">
+                <h2>Projects</h2>
+                <div id="projectsList">
+                    <div class="entry" id="proj_0">
+                        <div class="grid-2">
+                            <input type="text" placeholder="Project Name" class="proj_name">
+                            <input type="text" placeholder="Tech Stack (e.g. React, Node.js, MongoDB)"
+                                class="proj_tech">
+                            <input type="text" placeholder="Date (e.g. Jan 2024 -- Present)" class="proj_date">
+                        </div>
+                        <textarea placeholder="Bullet points (one per line)" class="proj_bullets" rows="4"></textarea>
+                    </div>
+                </div>
+                <button type="button" class="add-btn" onclick="addProject()">+ Add Project</button>
+            </div>
+
+            <!-- Skills -->
+            <div class="section">
+                <h2>Technical Skills</h2>
+                <div class="grid-1">
+                    <input type="text" id="languages" placeholder="Languages (e.g. JavaScript, Python, C++)">
+                    <input type="text" id="frameworks" placeholder="Frameworks (e.g. React, Node.js, Flask)">
+                    <input type="text" id="tools" placeholder="Developer Tools (e.g. Git, Docker, VS Code)">
+                    <input type="text" id="libraries" placeholder="Libraries (e.g. pandas, NumPy)">
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Generate Resume PDF</button>
+
+        </form>
+
+        <div id="status" class="status hidden"></div>
+
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
