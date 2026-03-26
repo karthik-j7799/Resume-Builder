@@ -2,7 +2,6 @@ services:
   - type: web
     name: resume-builder
     env: python
-    pythonVersion: "3.11.0"
-    buildCommand: sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-latex-extra && pip install flask
+    buildCommand: pip install flask requests
     startCommand: python app.py
     plan: free
