@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template, send_file
 import os
 import requests
-import tempfile
 
 app = Flask(__name__)
 
@@ -25,7 +24,6 @@ def generate():
 
     tex = fill_template(tex, data)
 
-    # Send to LaTeX.Online API
     response = requests.post(
         'https://latexonline.cc/compile',
         files={'file': ('resume.tex', tex.encode('utf-8'), 'application/x-tex')}
@@ -93,9 +91,7 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port, debug=False)
 ```
 
----
-
-**Update `requirements.txt`:**
+And `requirements.txt`:
 ```
 flask
 requests
